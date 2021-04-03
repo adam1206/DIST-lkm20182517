@@ -18,7 +18,4 @@ for i in range(total_teams):
     
 for i in project_team:
     print(i)
-    
-    
-    
-    
+       
