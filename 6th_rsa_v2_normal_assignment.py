@@ -3,8 +3,8 @@
 # 3. phi(n) = (p - 1) * (q - 1)
 # 4. find e: gcd(phi(n), e) = 1, 1 < e < phi(n)
 # 5. find d: e * d mod phi(n) = 1, 1 < d < phi(n)
-# 6. encrypt
-# 7. decrypt
+# 6. decrypt
+# 7. encrypt
 
 # import math
 from math import gcd
@@ -35,9 +35,8 @@ def find_d(phi_n: int, e: int):
             
     return d        
 
-def encrypt(plain_text: str, pub_key: list):
+def encrypt(plain_text: list, pub_key: list):
     # c = p^e mod n
-    plain_bytes = [ord(x) for x in plain_text]
     cipher_bytes = []
     
     for i in plain_bytes:
@@ -45,11 +44,12 @@ def encrypt(plain_text: str, pub_key: list):
         
     return cipher_bytes    
         
-def decrypt(cipher_list: list, pri_key: list):
+def decrypt(cipher_list: str, pri_key: list):
     # p = c^d mod n
     # to_list
-    
+    cipher_bytes = [ord(x) for x in cipher_list]
     plain_bytes = []
+    
     for i in cipher_list:
         plain_bytes.append((i ** pri_key[1]) % pri_key[0])
         
@@ -65,19 +65,15 @@ if __name__=="__main__":
     pub_key = [n, e]
     pri_key = [n, d]
     
-    plain = "hello world"
+    cipher = "0x4d765050762d2162592d1512043e813e6e6e"
     
-    cipher = encrypt(plain, pub_key)
+    plain = decrypt(cipher, pri_key)
     
-    hex_list = []
-    for i in cipher:
-        hex_list.append("{:02x}".format(i))
+    hex_to_decimal = []
+    for i in plain:
+        hex_to_decimal.append("{:02x}".format(i))
     
-    hex_text = "0x" + "".join(hex_list)   
+    hex_text = "0x" + "".join(hex_to_decimal)   
     
-    dec_plain = decrypt(cipher, pri_key)
-    print(dec_plain)
-
-
-
-
+    plain = decrypt(cipher, pri_key)
+    print(plain)
